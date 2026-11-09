@@ -3,10 +3,16 @@
 An operations agent on Claude works cases in a synthetic payments back office: compliance
 requests (RFIs), reconciliation breaks, late payouts and failing rails. Every case has a correct
 answer the world's generator knows, so every pick the agent makes is scored by code, never by a
-model. Prove sweeps the agent over twenty fixed cases on Claude Sonnet 5.5, then again on Claude
-Haiku 5.5 on the same seeds, and compares the two runs condition by condition. Trace reads the
-same two runs and says where in the episode failures stop, and whether the cheaper model failed
-more or less often across all twenty cases at once.
+model. Two examples run on it, each with its own sweep spec:
+
+- **Can the agent move to a cheaper model?** (`cheaper-model.toml`) Prove sweeps the agent on
+  Claude Sonnet 5.5, then on Claude Haiku 5.5 on the same seeds, one fixed case per action type
+  at the fewest replicates Prove's power check accepts, and compares the two runs condition by
+  condition. Trace reads the same runs.
+- **Catch a planted regression** (`planted-regression.toml`). A known-bad change, made on
+  purpose: `read_identity_record` times out on every call (`src/backoffice_agent/planted.py`).
+  Prove compares the agent before and after on twenty fixed cases; Trace names the step the
+  failures now stop at.
 
 The world is synthetic. The transactions, end users, cases and the six providers are invented;
 the rails' clocks, the destinations' banking calendars and the FX fixings copy public rules and
@@ -17,8 +23,8 @@ and digests. It is a walkthrough, not anyone's real system.
 
 - Python 3.11 or later, on macOS or Linux.
 - An Anthropic API key in `ANTHROPIC_API_KEY`. Every model call is yours.
-- About $16 of model spend for both sweeps (`python -m backoffice_agent plan` prints it before
-  anything runs), under a $20 cap the agent enforces itself.
+- About $30 of model spend for each example; `python -m backoffice_agent plan` prints it before
+  anything runs, and the agent refuses a call at `BACKOFFICE_CAP_USD` ($20 unless you set it).
 - For the Trace steps, Poisson Trace 0.1.0rc2. Trace is a pre-release and is not on PyPI yet:
   the `poisson-trace` there today is a placeholder. Ask work@poissonlabs.ai for the wheel; once
   Trace is public, `pip install poisson-trace` replaces it.
@@ -29,15 +35,37 @@ and digests. It is a walkthrough, not anyone's real system.
 python3 -m venv .venv && source .venv/bin/activate
 pip install .
 python -m backoffice_world ensure world      # generates the world (about 6 minutes) and checks its digests
-BACKOFFICE_WORLD=world pytest tests          # keyless: the oracle's own pick scores right on every case (pip install pytest)
-python -m backoffice_agent plan              # the stated cost, before any spend
-poisson-prove sweep --dry-run                # Prove's plan and its design limit
-poisson-prove sweep --yes --max-mde 0.99
-poisson-prove sweep --yes --max-mde 0.99 --target backoffice_agent.agent:rollout_haiku --pair-with latest
-poisson-prove diff
-poisson-prove report --x case --y action
-python -m backoffice_agent spend             # what the two sweeps cost
+BACKOFFICE_WORLD=world pytest tests          # keyless checks of the wiring (pip install pytest)
 ```
+
+The cheaper model:
+
+```bash
+export BACKOFFICE_CAP_USD=40
+python -m backoffice_agent plan cheaper-model.toml --sweeps sonnet haiku
+poisson-prove sweep cheaper-model.toml --dry-run
+poisson-prove sweep cheaper-model.toml --yes --name sonnet
+poisson-prove sweep cheaper-model.toml --yes --target backoffice_agent.agent:rollout_haiku --pair-with sonnet --name haiku
+poisson-prove diff sonnet haiku
+python -m backoffice_agent spend
+```
+
+The planted regression, in a folder of its own so its store and ledger stay apart:
+
+```bash
+export BACKOFFICE_CAP_USD=35
+python -m backoffice_agent plan planted-regression.toml --sweeps sonnet planted
+poisson-prove sweep planted-regression.toml --dry-run
+poisson-prove sweep planted-regression.toml --yes --max-mde 0.729 --name before
+poisson-prove sweep planted-regression.toml --yes --max-mde 0.729 --target backoffice_agent.planted:rollout_planted --pair-with before --name planted
+poisson-prove diff before planted
+python -m backoffice_agent spend
+```
+
+At twenty replicates Prove's power check refuses its default 0.20: one condition could only be
+flagged for a large change. `--max-mde 0.729` is the smallest change Prove itself offers to
+accept for the paired sweep; the check stays on at that size. A planted break that stops every
+RFI is far larger; a subtle regression would not be seen at this size.
 
 Then Trace, in an environment of its own: Trace 0.1.0rc2 reads Prove through an exact pin,
 `poisson-prove==0.1.3`, and reads the store Prove 0.2.2 wrote as it is.
@@ -45,14 +73,12 @@ Then Trace, in an environment of its own: Trace 0.1.0rc2 reads Prove through an 
 ```bash
 python3 -m venv trace-env
 trace-env/bin/pip install ./poisson_trace-0.1.0rc2-py3-none-any.whl
-trace-env/bin/poisson-trace where "back-office-agent DATE a" --store prove-runs --event wrong --by step
-trace-env/bin/poisson-trace compare "back-office-agent DATE a" "back-office-agent DATE b" --store prove-runs --event wrong --by step --max-mde-hr 1.5
-trace-env/bin/poisson-trace fix-check "back-office-agent DATE a" "back-office-agent DATE b" --store prove-runs --event wrong --inputs all --max-mde 0.10
+trace-env/bin/poisson-trace runs --store prove-runs
+trace-env/bin/poisson-trace where planted --store prove-runs --event no_action --by step
+trace-env/bin/poisson-trace compare before planted --store prove-runs --event no_action --by step --max-mde-hr 1.5
 ```
 
-`DATE` is the day the runs were made; `poisson-prove runs` lists their names. Trace refuses an
-event a run does not carry, so name the failures your runs hold (`poisson-trace runs --store
-prove-runs` lists them).
+Trace refuses an event a run does not carry; `runs` lists the outcomes each run holds.
 
 ## What is here
 
@@ -60,10 +86,12 @@ prove-runs` lists them).
 |---|---|
 | `src/backoffice_world/` | the world generator: a seeded payments back office (payments, attempts, statements, reconciliation passes and breaks, RFIs, identity records, rail health), its oracle and its context documents. `python -m backoffice_world ensure world` regenerates it byte for byte and checks it against `pin.json` |
 | `src/backoffice_agent/agent.py` | the agent's loop, its two rollouts (`rollout_sonnet`, `rollout_haiku`), the fixed cases, and the spend ledger with its cap |
+| `src/backoffice_agent/planted.py` | the planted regression: the same agent with `read_identity_record` timing out |
 | `src/backoffice_agent/tools.py` | six read-only tools and the action tools; no tool writes the world or moves money |
 | `src/backoffice_agent/scorer.py`, `notes.py`, `facts.py` | the scorer: `right`, `wrong`, `harmful` or `no_action`, from the pick and the world's own answer |
 | `src/backoffice_agent/prompts/` | the system prompt and the four task messages |
-| `prove.toml` | the sweep spec: four action types by five cases, 20 replicates each |
+| `cheaper-model.toml` | four action types by one fixed case, 190 replicates each |
+| `planted-regression.toml` | four action types by five fixed cases, 20 replicates each |
 | `tests/` | the keyless check, with a scripted client that plays the world's own answer |
 
 ## How the agent is wrapped for Prove

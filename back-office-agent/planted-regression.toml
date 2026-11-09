@@ -1,6 +1,6 @@
-# The operations agent, one case per condition: four action types, five fixed cases each.
+# Catch a planted regression: four action types by five fixed cases, 20 replicates each.
 target = "backoffice_agent.agent:rollout_sonnet"
-target_id = "back-office-agent"
+target_id = "back-office-agent-planted"
 t_unit = "tool_calls"
 replicates = 20
 

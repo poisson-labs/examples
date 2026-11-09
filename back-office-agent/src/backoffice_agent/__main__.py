@@ -1,6 +1,6 @@
 """Command line: the stated cost of the sweeps before any spend, and the spend after.
 
-python -m backoffice_agent plan [prove.toml]   what the two sweeps will cost, and the cap
+python -m backoffice_agent plan SPEC.toml --sweeps sonnet haiku   what the sweeps will cost, and the cap
 python -m backoffice_agent spend               what the spend ledger holds, by model
 """
 
@@ -23,20 +23,26 @@ PER_CASE_USD: dict[str, dict[str, float]] = {
 }
 
 
-def plan(spec: Path) -> int:
+#: A sweep's name on the command line, and the model it calls.
+SWEEPS: dict[str, str] = {"sonnet": SONNET, "haiku": HAIKU, "planted": SONNET}
+
+
+def plan(spec: Path, sweeps: list[str]) -> int:
     doc = tomllib.loads(spec.read_text(encoding="utf-8"))
     actions = doc["axes"]["action"]["values"]
     slots = doc["axes"]["case"]["values"]
     reps = int(doc["replicates"])
     total = 0.0
-    print(f"plan  two sweeps of {len(actions) * len(slots) * reps:,} episodes each: "
-          f"{len(actions)} action types x {len(slots)} cases x {reps} replicates")
-    for model in (SONNET, HAIKU):
+    n = len(actions) * len(slots) * reps
+    print(f"plan  {len(sweeps)} sweeps of {n:,} episodes each: "
+          f"{len(actions)} action types x {len(slots)} case{'s' if len(slots) > 1 else ''} x {reps} replicates")
+    for name in sweeps:
+        model = SWEEPS[name]
         est = sum(PER_CASE_USD[model][a] * len(slots) * reps for a in actions)
         total += est
-        print(f"  {model}  about ${est:.2f}")
+        print(f"  {name}  {model}  about ${est:.2f}")
     spent = ledger_total()
-    print(f"  both  about ${total:.2f}; already spent ${spent:.2f} ({ledger_path()})")
+    print(f"  all  about ${total:.2f}; already spent ${spent:.2f} ({ledger_path()})")
     print(f"  cap  ${cap_usd():.2f}: at the cap an episode makes no call and raises (BACKOFFICE_CAP_USD)")
     print("  per case: measured on an earlier run of this agent, by action type")
     return 0
@@ -65,11 +71,12 @@ def spend() -> int:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="backoffice_agent")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    pl = sub.add_parser("plan", help="what the two sweeps will cost, before any spend")
-    pl.add_argument("spec", type=Path, nargs="?", default=Path("prove.toml"))
+    pl = sub.add_parser("plan", help="what the sweeps will cost, before any spend")
+    pl.add_argument("spec", type=Path)
+    pl.add_argument("--sweeps", nargs="+", choices=sorted(SWEEPS), required=True)
     sub.add_parser("spend", help="what the spend ledger holds, by model")
     args = ap.parse_args(argv)
-    return plan(args.spec) if args.cmd == "plan" else spend()
+    return plan(args.spec, args.sweeps) if args.cmd == "plan" else spend()
 
 
 if __name__ == "__main__":

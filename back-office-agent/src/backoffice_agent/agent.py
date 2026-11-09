@@ -16,6 +16,8 @@ Each tool call is recorded as a step with Prove's ``record()``, named after the 
 ``agent`` span for the episode, so the stored trace has one leaf per tool call. That is what Trace
 counts as a step.
 
+A tool that times out (``ToolTimeout``) stops the episode at that step with no action.
+
 Every model call is priced from the usage the API returns and appended to a spend ledger
 (``spend.jsonl`` in the working folder, or ``BACKOFFICE_LEDGER``). Before each call the ledger's
 total is checked against the cap (``BACKOFFICE_CAP_USD``, $20 by default); at the cap the
@@ -62,6 +64,11 @@ DEFAULT_CAP_USD = 20.0
 
 class CapReached(RuntimeError):
     """The spend ledger has reached the cap; no further model call is made."""
+
+
+class ToolTimeout(RuntimeError):
+    """A tool call that did not return in time. The loop stops the episode at that step, with no
+    action, as a harness stops an agent whose tool hangs."""
 
 
 # ---------- the world and the cases ----------
@@ -197,11 +204,13 @@ def _as_param(block: Any) -> dict[str, Any]:
     return dict(dump(exclude_none=True)) if callable(dump) else dict(block)
 
 
-def run_episode(world: World, case_id: str, client: Any, model: str) -> tuple[Score, dict[str, Any]]:
+def run_episode(
+    world: World, case_id: str, client: Any, model: str, toolbox: type[ToolBox] = ToolBox
+) -> tuple[Score, dict[str, Any]]:
     """One episode on ``case_id`` with ``model``: the loop, the pick and its score, and the meta
-    Prove stores (with the trace under ``trace``)."""
+    Prove stores (with the trace under ``trace``). ``toolbox`` is the tools' class."""
     facts = case_facts(world, case_id)
-    box = ToolBox(world, case_id)
+    box = toolbox(world, case_id)
     tool_calls: list[str] = []
     model_calls = 0
     tokens_in = tokens_out = 0
@@ -239,18 +248,26 @@ def run_episode(world: World, case_id: str, client: Any, model: str) -> tuple[Sc
                             out: Any = {"refused": True, "tool_call_limit": TOOL_CALL_LIMIT}
                             is_error = True
                         else:
-                            res = box.call(name, args if isinstance(args, Mapping) else {})
-                            out, is_error = res.content, res.is_error
+                            try:
+                                res = box.call(name, args if isinstance(args, Mapping) else {})
+                                out, is_error = res.content, res.is_error
+                            except ToolTimeout:
+                                out, is_error = {"error": "timed_out", "tool": name}, True
+                                stopped = "tool_timeout"
                         span.output = out
                         if is_error:
                             span.error = json.dumps(out, sort_keys=True, ensure_ascii=False)[:500]
                     tool_calls.append(name)
+                    if stopped == "tool_timeout":
+                        break
                     results.append({
                         "type": "tool_result",
                         "tool_use_id": _get(use, "id"),
                         "content": json.dumps(out, sort_keys=True, ensure_ascii=False),
                         "is_error": is_error,
                     })
+                if stopped == "tool_timeout":
+                    break
                 if box.pick is not None:
                     stopped = "action"
                     break
@@ -285,10 +302,10 @@ def _client() -> Any:
     return anthropic.Anthropic()
 
 
-def _rollout(cfg: Mapping[str, Any], model: str) -> Episode:
+def _rollout(cfg: Mapping[str, Any], model: str, toolbox: type[ToolBox] = ToolBox) -> Episode:
     world = open_world()
     case_id = case_for(cfg)
-    s, meta = run_episode(world, case_id, _client(), model)
+    s, meta = run_episode(world, case_id, _client(), model, toolbox)
     return Episode(outcome=s.outcome, t=len(meta["tool_calls"]), horizon=TOOL_CALL_LIMIT, meta=meta)
 
 

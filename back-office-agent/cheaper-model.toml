@@ -1,0 +1,19 @@
+# Can the agent move to a cheaper model? One fixed case per action type, at the fewest
+# replicates Prove's power check accepts for a paired comparison at its default 0.20.
+target = "backoffice_agent.agent:rollout_sonnet"
+target_id = "back-office-agent"
+t_unit = "tool_calls"
+replicates = 190
+
+[axes.action]
+type = "categorical"
+values = ["rfi", "break", "stuck", "reroute"]
+
+[axes.case]
+type = "categorical"
+values = ["1"]
+
+[declare]
+outcomes = ["right", "wrong", "harmful", "no_action"]
+failures = ["wrong", "harmful", "no_action"]
+successes = ["right"]

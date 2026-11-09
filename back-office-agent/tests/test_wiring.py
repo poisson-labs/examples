@@ -40,7 +40,7 @@ def test_the_rollout_returns_an_episode_with_its_case(world, tmp_path, monkeypat
     monkeypatch.setattr(agent, "_spent", None)
     monkeypatch.setattr(agent, "_client", lambda: None)
     real = agent.run_episode
-    monkeypatch.setattr(agent, "run_episode", lambda w, c, _client, m: real(w, c, OracleClient(case_facts(w, c)), m))
+    monkeypatch.setattr(agent, "run_episode", lambda w, c, _client, m, *tb: real(w, c, OracleClient(case_facts(w, c)), m, *tb))
     ep = agent.rollout_haiku({"action": "stuck", "case": "2"}, seed=0)
     assert isinstance(ep, Episode) and ep.outcome == "right"
     assert ep.meta["case_id"] == agent.cases(world, "stuck")[1] and ep.meta["model"] == agent.HAIKU
@@ -56,3 +56,17 @@ def test_the_cap_stops_before_a_call(world, tmp_path, monkeypatch):
     with pytest.raises(agent.CapReached):
         agent.run_episode(world, case_id, client, agent.SONNET)
     assert client.n == 0
+
+
+def test_the_planted_break_stops_an_rfi_at_the_identity_tool_and_leaves_a_break_alone(world, tmp_path, monkeypatch):
+    from backoffice_agent.planted import BrokenIdentityToolBox
+
+    monkeypatch.setenv("BACKOFFICE_LEDGER", str(tmp_path / "spend.jsonl"))
+    monkeypatch.setattr(agent, "_spent", None)
+    rfi = agent.cases(world, "rfi")[0]
+    s, meta = agent.run_episode(world, rfi, OracleClient(case_facts(world, rfi)), agent.SONNET, BrokenIdentityToolBox)
+    assert s.outcome == "no_action" and meta["stopped"] == "tool_timeout"
+    assert meta["tool_calls"][-1] == "read_identity_record"
+    brk = agent.cases(world, "break")[0]
+    s, meta = agent.run_episode(world, brk, OracleClient(case_facts(world, brk)), agent.SONNET, BrokenIdentityToolBox)
+    assert s.outcome == "right"
