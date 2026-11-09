@@ -70,3 +70,25 @@ def test_the_planted_break_stops_an_rfi_at_the_identity_tool_and_leaves_a_break_
     brk = agent.cases(world, "break")[0]
     s, meta = agent.run_episode(world, brk, OracleClient(case_facts(world, brk)), agent.SONNET, BrokenIdentityToolBox)
     assert s.outcome == "right"
+
+
+def test_a_turn_asking_for_more_calls_than_are_left_stops_at_the_limit(world, tmp_path, monkeypatch):
+    from scripted import response, tool_use
+
+    monkeypatch.setenv("BACKOFFICE_LEDGER", str(tmp_path / "spend.jsonl"))
+    monkeypatch.setattr(agent, "_spent", None)
+    case_id = agent.cases(world, "reroute")[0]
+    corridor = case_facts(world, case_id)["corridor"]
+    burst = response(*[tool_use("read_rail_health", {"corridor": corridor}, f"tu_{i:03d}") for i in range(20)])
+
+    class Burst:
+        def __init__(self):
+            self.messages = self
+
+        def create(self, **kwargs):
+            burst.usage = type("U", (), {"input_tokens": 0, "output_tokens": 0})()
+            return burst
+
+    s, meta = agent.run_episode(world, case_id, Burst(), agent.SONNET)
+    assert len(meta["tool_calls"]) == agent.TOOL_CALL_LIMIT
+    assert meta["stopped"] == "tool_call_limit" and s.outcome == "no_action"

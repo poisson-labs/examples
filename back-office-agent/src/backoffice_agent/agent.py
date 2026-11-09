@@ -241,19 +241,21 @@ def run_episode(
                     break
                 results: list[dict[str, Any]] = []
                 for use in uses:
+                    if len(tool_calls) >= TOOL_CALL_LIMIT:
+                        # the model asked for more calls in one turn than the episode has left:
+                        # the rest are not run, and the episode stops at the limit
+                        stopped = "tool_call_limit"
+                        break
                     name = str(_get(use, "name"))
                     args = _get(use, "input")
                     with record("tool", name, input=args, step_name=name) as span:
-                        if len(tool_calls) >= TOOL_CALL_LIMIT:
-                            out: Any = {"refused": True, "tool_call_limit": TOOL_CALL_LIMIT}
-                            is_error = True
-                        else:
-                            try:
-                                res = box.call(name, args if isinstance(args, Mapping) else {})
-                                out, is_error = res.content, res.is_error
-                            except ToolTimeout:
-                                out, is_error = {"error": "timed_out", "tool": name}, True
-                                stopped = "tool_timeout"
+                        try:
+                            res = box.call(name, args if isinstance(args, Mapping) else {})
+                            out: Any = res.content
+                            is_error = res.is_error
+                        except ToolTimeout:
+                            out, is_error = {"error": "timed_out", "tool": name}, True
+                            stopped = "tool_timeout"
                         span.output = out
                         if is_error:
                             span.error = json.dumps(out, sort_keys=True, ensure_ascii=False)[:500]
@@ -266,7 +268,7 @@ def run_episode(
                         "content": json.dumps(out, sort_keys=True, ensure_ascii=False),
                         "is_error": is_error,
                     })
-                if stopped == "tool_timeout":
+                if stopped in ("tool_timeout", "tool_call_limit"):
                     break
                 if box.pick is not None:
                     stopped = "action"
