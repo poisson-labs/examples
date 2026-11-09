@@ -1,0 +1,26 @@
+{
+  "figures_pct": [
+    0.05,
+    0.1,
+    0.12,
+    0.2,
+    0.3,
+    2.0,
+    2.25,
+    5.0,
+    8.0,
+    19.0,
+    20.0,
+    63.0,
+    72.0,
+    95.0,
+    113.0,
+    450.0,
+    892.5,
+    1284.0,
+    2098.1,
+    2105.2,
+    3220.0
+  ],
+  "note": "Figures, in percent, that no modelled markup floor may equal: a floor within 0.005 points of one is raised by 0.005 until it is clear of every one."
+}

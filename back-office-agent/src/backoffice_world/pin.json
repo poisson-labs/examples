@@ -1,0 +1,39 @@
+{
+ "context": {
+  "glossary.md": "087fcd80f80d54697e3410e56842d6beba76b5b0f39e89c897b0f708c56b69c5",
+  "normalisation_table.md": "7435608976ea04ff0b907ee5a08244a2edff72e44efa3f424c28f91fa8002385",
+  "ops_weekly_w39.md": "849a3371bde9d870133cbd878a9daf9f7b1718e437977cab6e0014223081f6a0",
+  "resolution_playbook.md": "50ace8980e201a6bdc22b1c5bff090e600ab1feb93d0351c44cdc5d909df7e05",
+  "rfi_item_map.md": "c67c08cb2df44ad146da46720f5c03593cc929dcf5945df3d97f6e5f20f5b2a0",
+  "routing_policy.md": "e12fd5d7f1b5d557e85a6d8fd0c988f60f8cfb20a8f3bd06270078328fab32f4",
+  "schema_notes.md": "2f022318ab3e1c21fa293978b8ba38bccdcd1d298369f83349a10ee47a2bacec"
+ },
+ "oracle": "e1d0d2ef6e2c9139902dc0b18a1a8cbb9896e3e234e8fec1fe44d5d7058cce5c",
+ "payments": 60000,
+ "seed": 2026,
+ "tables": {
+  "attempts": "6266621714e4beaa9b9d7772931ee34bf3a5485a5de2409c96143d1bb920d43d",
+  "break_versions": "0feda79d1f5b71278266a008488e1a7d72593f52db3e0ed1d30c5d25991c01a8",
+  "breaks": "9b0b55d8a5aa064dc50fa896888ff26d6494ee535d0baf303fa5b16c68e12544",
+  "calendars": "6a1f8f4415b672a900709298010896cd7cdbfca9ba14bfbc50d01df584125aac",
+  "corridor_weekly_summary": "a88e1889fd03e3bd69862182a0e3e291a89133ff6bee65135b55bc1a3f2b78e4",
+  "degradation_windows": "b7b37d8dccf88bb500dc83c8cb3e5f77a9d095a957c03e66fbc2bcc94bf9e7b0",
+  "events": "5b5f6d2425a9dab3eda08bfa75f81958af63eba8370280b4fe65ce1c65beece7",
+  "fx_markup_model": "f94c176c9ad64b58077e41bb7821770b2e64dd7daa2673a811557876c4d27ba6",
+  "fx_mid": "a8412a9d88a0dbae31abe2b4a7e599b94d63f6ed572bf25da91d89c42dd6fa3a",
+  "fx_quotes": "6c7a1521e8745b5799df9cfb38db75a46bb3d51b156e7d40c61b41849e6fb35b",
+  "identity_records": "4bf60183d779bb760b8be973f56a25bdf4f8dced74a2ec0ae3bd94f5d717810a",
+  "incidents": "17b7253d9f5dbf05339d36b2ba6c1ae08509342cfd7313073acb681bd5341f05",
+  "passes": "29148ef95d7f83c432fedcb29df23eb683c69902ce1f6568f28e61329a3c6e61",
+  "payments": "34d70dd9ca73f83c2c4b7fac8f9c33a47198530d39c1db991826f92e22c91b89",
+  "platforms": "f354c39f56e837a8c2287660cd670001589c3f645b9c97f1c80cd4a20a6bb6d2",
+  "profiles": "9b0fc63bdbb18707f67c519c98f2b462e201482e72a42e57b76e5a26f0ca9a42",
+  "provider_vocabulary": "db27d8930bbc2f8693c638a1b500601ebbd6499c2ffa78bb7a1aaa6ea8ec7003",
+  "providers": "d0047bd8ea7745fd45eaf1e01cfb9a9236e8b026dc3eb013ede9644a28eb9d9a",
+  "rails": "8d260c5546d1306e216c0464477df2eed0bd6be77a93faeca492c87d9faaf275",
+  "rfis": "0cf18a2cc3d82a10a94e94c9bee70705c104b4894fcf18308cc675b11643a879",
+  "statements": "a89247920242db7394dd51757ed419f09dd20218df67cb33cc3ef211859ad683",
+  "webhook_incidents": "cd450f9caeb5428f0fb9486af8140de6775d32c91c8dc7884cf3dd69624da129",
+  "world_meta": "86ad6fb4d4c703de1e22c0abde15d89c371daf50fcc92690f4dbc4a6f150537f"
+ }
+}

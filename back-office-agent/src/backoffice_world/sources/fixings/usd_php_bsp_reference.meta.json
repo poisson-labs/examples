@@ -1,0 +1,11 @@
+{
+  "also": "https://www.bsp.gov.ph/Statistics/RERB/RERB.xlsx (the bulletin of the day read), https://www.bsp.gov.ph/SitePages/Statistics/ExchangeRate.aspx",
+  "banking_day_rows": 68,
+  "carry_forward": "the generator carries the last fixing forward over non-banking days",
+  "gaps_as_read": "no rate on Saturdays, Sundays, Friday 2026-08-21 (Ninoy Aquino Day) or Monday 2026-08-31 (National Heroes Day); nowhere else",
+  "read_at": "2026-10-12T20:52Z",
+  "series": "Bangko Sentral ng Pilipinas, Philippine Peso per US Dollar Rate, daily (the USD line of the Reference Exchange Rate Bulletin; the 12 October 2026 bulletin RERB.xlsx shows 62.793, equal to the daily sheet's 12 Oct value)",
+  "unit": "PHP per USD",
+  "url": "https://www.bsp.gov.ph/statistics/external/pesodollar.xlsx",
+  "window_days_seen": 98
+}

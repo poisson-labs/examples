@@ -1,0 +1,12 @@
+{
+  "banking_day_rows": 69,
+  "carry_forward": "the generator carries the last fixing forward over non-banking days",
+  "gaps_as_read": "N/E on every Saturday and Sunday and on Wednesday 2026-09-16 (the CNBV closing day); nowhere else",
+  "note": "The page also shows \"Publicación DOF\" (the next banking day) and \"Para solventar obligaciones\" (the rate applying to obligations that day); both are kept beside the fixing and are not used by the world.",
+  "query": "form at https://www.banxico.org.mx/tipcamb/tipCamMIAction.do, fechaInicial 29/06/2026, fechaFinal 04/10/2026, series FIX, salida HTML, submitted in a browser on 2026-10-12 (the SIE REST API requires a registered token; the public query page does not)",
+  "read_at": "2026-10-12T20:54Z",
+  "rows_as_read": 98,
+  "series": "Banco de México, tipo de cambio FIX (tipo de cambio para solventar obligaciones denominadas en dólares de los EE.UU.A., pagaderas en la República Mexicana), column \"Determinación\"",
+  "unit": "MXN per USD",
+  "url": "https://www.banxico.org.mx/tipcamb/tipCamIHAction.do"
+}

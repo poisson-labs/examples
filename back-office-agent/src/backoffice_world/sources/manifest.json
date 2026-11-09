@@ -1,0 +1,91 @@
+{
+  "files": [
+    {
+      "bytes": 1738,
+      "path": "calendars/br.json",
+      "sha256": "4072b5b4ca084c56ddd193748ec4feb05615a7032809ca4a07c635d6041ee705"
+    },
+    {
+      "bytes": 1161,
+      "path": "calendars/de.json",
+      "sha256": "5259e4a77f12a56d7777ec241c9741f402632dbaba4a4e26b6d73c5f0b634cdb"
+    },
+    {
+      "bytes": 1526,
+      "path": "calendars/mx.json",
+      "sha256": "79f461de67a2fd7dc7254074608536c0dbe02841cf41c994ed0b0a022ea75797"
+    },
+    {
+      "bytes": 1903,
+      "path": "calendars/ph.json",
+      "sha256": "8a3a4a561ec797cafe8eafcbd5ae98b95e0630d7267c336560f34fe7ef743de4"
+    },
+    {
+      "bytes": 1791,
+      "path": "calendars/us.json",
+      "sha256": "4c250d2285ad4b3d64814f9c9248ab8c41b1ef875562c5269a963e69e418e074"
+    },
+    {
+      "bytes": 402,
+      "path": "excluded_figures.json",
+      "sha256": "96e1eaef7fd56b55713a23137216a92bceb23da4e2194d002b5e1e5199ea8249"
+    },
+    {
+      "bytes": 3089,
+      "path": "fees.json",
+      "sha256": "326945b2c01d220c94ace63649a703a49bac93acce63e4d93b6907e465bcbc9a"
+    },
+    {
+      "bytes": 4185,
+      "path": "fixings/usd_brl_bcb_ptax.csv",
+      "sha256": "d0e3894ebcaa96fb9d36e29fa733d8d90b2bc6a6037c6c00562140ad859ce825"
+    },
+    {
+      "bytes": 708,
+      "path": "fixings/usd_brl_bcb_ptax.meta.json",
+      "sha256": "0dcce6e21d4e6026b7c3d1951eea8b1e619a7be9c0a8e6250b22bd90dbc5019c"
+    },
+    {
+      "bytes": 1264,
+      "path": "fixings/usd_eur_ecb_reference.csv",
+      "sha256": "c79c41ba18eb222f466652f57ac9d2d410629d521cec9515b6d7ac0239720218"
+    },
+    {
+      "bytes": 836,
+      "path": "fixings/usd_eur_ecb_reference.meta.json",
+      "sha256": "c5a2b73b6990faf3538ae4ece20c29184c3cfeb914cd011a712b89a58bb83855"
+    },
+    {
+      "bytes": 2469,
+      "path": "fixings/usd_mxn_banxico_fix.csv",
+      "sha256": "de523bf1598bfd44603aadc4c73613fd529f88bd0ed708d9deeac86a4d9eb457"
+    },
+    {
+      "bytes": 1071,
+      "path": "fixings/usd_mxn_banxico_fix.meta.json",
+      "sha256": "37a5ced8e18a3fcd6e68572596942e8aa1e15818c0f8fe8057a0882065bd8f72"
+    },
+    {
+      "bytes": 1234,
+      "path": "fixings/usd_php_bsp_reference.csv",
+      "sha256": "dd94c6e4521498a630859282b1d5583e6f2da9e73eec79a086f7a2bb5cb390c0"
+    },
+    {
+      "bytes": 812,
+      "path": "fixings/usd_php_bsp_reference.meta.json",
+      "sha256": "69b941127f6a6f2aa495f2c45c982b177956c0c447f4f79ec4a8d4f0eed835ec"
+    },
+    {
+      "bytes": 2456,
+      "path": "fx_sanity.json",
+      "sha256": "03e5555d27e547d9a35dc7eae2eafb8aec53534392520af6f3e438d1fb6c34d5"
+    },
+    {
+      "bytes": 5794,
+      "path": "rails.json",
+      "sha256": "07b7949b3855c7b344793f02f21e62286c797dbb546b80f916006dc2fa7e08e8"
+    }
+  ],
+  "frozen_on": "2026-10-12",
+  "rule": "the generator refuses to run against a file whose digest differs from this list"
+}

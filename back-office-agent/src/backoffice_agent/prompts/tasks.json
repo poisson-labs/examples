@@ -1,0 +1,6 @@
+{
+  "break": "Break {case_id} is open as of {as_of}. Read it and pick its resolution from its kind's list.",
+  "reroute": "Rail health alert on corridor {corridor} as of {as_of}: {from_provider} on {from_rail} is failing. Read the corridor's rail health and draft a reroute of that pair's payouts for a person to approve, or a hold if no healthy provider exists.",
+  "rfi": "RFI case {case_id} is in review as of {as_of}. Read the case and the end user's identity record and answer it with one action.",
+  "stuck": "Payout {attempt_id} is still in our queue as of {as_of}. Decide whether it is late against its own provider and rail's baseline, and flag it."
+}

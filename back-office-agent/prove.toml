@@ -1,0 +1,18 @@
+# The operations agent, one case per condition: four action types, five fixed cases each.
+target = "backoffice_agent.agent:rollout_sonnet"
+target_id = "back-office-agent"
+t_unit = "tool_calls"
+replicates = 20
+
+[axes.action]
+type = "categorical"
+values = ["rfi", "break", "stuck", "reroute"]
+
+[axes.case]
+type = "categorical"
+values = ["1", "2", "3", "4", "5"]
+
+[declare]
+outcomes = ["right", "wrong", "harmful", "no_action"]
+failures = ["wrong", "harmful", "no_action"]
+successes = ["right"]

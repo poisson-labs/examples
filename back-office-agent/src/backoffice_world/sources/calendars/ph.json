@@ -1,0 +1,44 @@
+{
+  "destination": "PH",
+  "non_banking_weekdays_in_window": [
+    {
+      "date": "2026-08-21",
+      "name": "Ninoy Aquino Day (special non-working day)"
+    },
+    {
+      "date": "2026-08-31",
+      "name": "National Heroes Day (regular holiday)"
+    }
+  ],
+  "notes": [
+    "Both days are non-banking days for PESONet in the world; InstaPay runs every day. A BSP memorandum listing bank holidays for 2026 was not found on the day read; the BSP's own daily series carries no reference rate on either day, which is the central bank's record of a non-banking day."
+  ],
+  "read_at": "2026-10-12",
+  "sources": [
+    {
+      "quote": "No reference rate on 2026-08-21 or 2026-08-31; a rate on every other weekday of the window.",
+      "read_at": "2026-10-12",
+      "title": "Bangko Sentral ng Pilipinas, daily peso per US dollar rate",
+      "url": "https://www.bsp.gov.ph/statistics/external/pesodollar.xlsx"
+    },
+    {
+      "quote": "Regular holidays: ... Aug. 31 (last Monday of August) - National Heroes Day ... Special (Non-Working) Days: Aug. 21 (Friday) - Ninoy Aquino Day ...",
+      "read_at": "2026-10-12",
+      "title": "PTV / Philippine News Agency, Palace releases official list of 2026 holidays (Proclamation No. 1006, 3 September 2025)",
+      "url": "https://ptvnews.ph/palace-releases-official-list-of-2026-holidays/"
+    },
+    {
+      "quote": "Answered 403 from here on the day read; the proclamation text was read through the PNA report above and matches the list in the spec session's evidence.",
+      "read_at": "2026-10-12",
+      "title": "Official Gazette, Proclamation No. 1006, s. 2025",
+      "url": "https://www.officialgazette.gov.ph/2025/09/03/proclamation-no-1006-s-2025/"
+    }
+  ],
+  "utc_offset_hours_in_window": 8,
+  "weekend_rule": "Saturdays and Sundays are non-banking days",
+  "window": [
+    "2026-06-29",
+    "2026-10-04"
+  ],
+  "zone": "Asia/Manila"
+}

@@ -1,0 +1,34 @@
+{
+  "destination": "MX",
+  "non_banking_weekdays_in_window": [
+    {
+      "date": "2026-09-16",
+      "name": "Independencia de México (CNBV closing day)"
+    }
+  ],
+  "notes": [
+    "SPEI runs every day, 24 hours (Banxico); the calendar applies to no Mexican rail in the world. Kept because the FIX is not determined on a closing day."
+  ],
+  "read_at": "2026-10-12",
+  "sources": [
+    {
+      "quote": "Artículo 1.- Las instituciones de crédito ... deberán cerrar sus puertas y suspender sus operaciones ... los siguientes días del año 2026: I. El 1o. de enero. II. El primer lunes de febrero ... VII. El 16 de septiembre. ...",
+      "read_at": "2026-10-12",
+      "title": "Diario Oficial de la Federación, 10 December 2025: DISPOSICIONES de carácter general que señalan los días del año 2026 en que las entidades financieras sujetas a la supervisión de la Comisión Nacional Bancaria y de Valores deberán cerrar sus puertas y suspender sus operaciones",
+      "url": "https://dof.gob.mx/nota_detalle.php?codigo=5775684&fecha=10/12/2025"
+    },
+    {
+      "quote": "The FIX is N/E (not determined) on 16/09/2026 and on no other weekday in the window.",
+      "read_at": "2026-10-12",
+      "title": "Banco de México, FIX series as read",
+      "url": "https://www.banxico.org.mx/tipcamb/tipCamIHAction.do"
+    }
+  ],
+  "utc_offset_hours_in_window": -6,
+  "weekend_rule": "Saturdays and Sundays are non-banking days",
+  "window": [
+    "2026-06-29",
+    "2026-10-04"
+  ],
+  "zone": "America/Mexico_City"
+}

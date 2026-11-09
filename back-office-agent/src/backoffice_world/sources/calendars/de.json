@@ -1,0 +1,29 @@
+{
+  "destination": "DE",
+  "non_banking_weekdays_in_window": [],
+  "notes": [
+    "No TARGET closing day falls inside the window; SCT settles on TARGET days, SCT Inst every day."
+  ],
+  "read_at": "2026-10-12",
+  "sources": [
+    {
+      "quote": "TARGET closing days 2026 (marked *): New Year's Day 1 January, Good Friday 3 April, Easter Monday 6 April, Labour Day 1 May, Christmas Day 25 December, Christmas Holiday 26 December. \"* : TARGET closing day\".",
+      "read_at": "2026-10-12",
+      "title": "European Central Bank, public holidays 2026 with TARGET closing days marked",
+      "url": "https://www.ecb.europa.eu/ecb/contacts/working-hours/html/index.en.html"
+    },
+    {
+      "quote": "70 rates on the 70 weekdays of the window.",
+      "read_at": "2026-10-12",
+      "title": "ECB reference rates in the window",
+      "url": "https://data-api.ecb.europa.eu/service/data/EXR/D.USD.EUR.SP00.A?startPeriod=2026-06-29&endPeriod=2026-10-04&format=csvdata"
+    }
+  ],
+  "utc_offset_hours_in_window": 2,
+  "weekend_rule": "Saturdays and Sundays are non-banking days",
+  "window": [
+    "2026-06-29",
+    "2026-10-04"
+  ],
+  "zone": "Europe/Berlin"
+}

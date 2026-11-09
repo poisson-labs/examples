@@ -1,0 +1,10 @@
+{
+  "banking_day_rows": 69,
+  "carry_forward": "the generator carries the last fixing forward over non-banking days",
+  "gaps_as_read": "no bulletin on Saturdays, Sundays or Monday 2026-09-07 (Independência do Brasil, a national holiday); nowhere else",
+  "read_at": "2026-10-12T20:51Z",
+  "rows_as_read": 69,
+  "series": "Banco Central do Brasil, PTAX (closing bulletin), CotacaoDolarPeriodo; rate = midpoint of cotacaoCompra and cotacaoVenda",
+  "unit": "BRL per USD",
+  "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial='06-29-2026'&@dataFinalCotacao='10-04-2026'&$top=1000&$format=json"
+}

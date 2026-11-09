@@ -1,0 +1,35 @@
+{
+  "destination": "US",
+  "non_banking_weekdays_in_window": [
+    {
+      "date": "2026-09-07",
+      "name": "Labor Day"
+    }
+  ],
+  "notes": [
+    "Reserve Banks are open on Friday 2026-07-03; the only US banking holiday in the window is Monday 2026-09-07.",
+    "frbservices.org/about/holiday-schedules/index.html answered 404 on the day read; the Board's K.8 page is the schedule used."
+  ],
+  "read_at": "2026-10-12",
+  "sources": [
+    {
+      "quote": "Independence Day: July 4 (Saturday). \"For holidays falling on Saturday, Federal Reserve Banks and Branches will be open the preceding Friday\"; footnote: \"Saturday - the Federal Reserve Banks are open, but the Board of Governors is closed on July 3, 2026.\" Labor Day: September 7 (Monday).",
+      "read_at": "2026-10-12",
+      "title": "Federal Reserve Board, K.8 Holidays Observed by the Federal Reserve System 2026",
+      "url": "https://www.federalreserve.gov/aboutthefed/k8.htm"
+    },
+    {
+      "quote": "the Federal Reserve Banks observe the following holidays: all Saturdays, all Sundays and the holidays listed on the Federal Reserve Banks’ Holiday Schedules. Each calendar day that is not a holiday observed by the Federal Reserve Banks is a funds-transfer business day. The funds-transfer business day ... begins at 9:00 p.m. ET on the preceding calendar day ... and ends at 7:00 p.m. ET.",
+      "read_at": "2026-10-12",
+      "title": "Federal Reserve Financial Services, Fedwire Funds Service operating hours",
+      "url": "https://www.frbservices.org/resources/financial-services/wires/operating-hours.html"
+    }
+  ],
+  "utc_offset_hours_in_window": -4,
+  "weekend_rule": "Saturdays and Sundays are non-banking days",
+  "window": [
+    "2026-06-29",
+    "2026-10-04"
+  ],
+  "zone": "America/New_York"
+}

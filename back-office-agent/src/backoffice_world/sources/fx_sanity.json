@@ -1,0 +1,61 @@
+{
+  "band_pct": [
+    0.04,
+    0.33
+  ],
+  "label": "Sanity check on the market level only: each corridor's markup band is floored at the widest quoted top-of-book spread saved for that corridor on 2026-10-12, so its lower end sits at or above every spread saved for it (the Mercado Bitcoin USDC-BRL spread of 0.0916% floors the Brazil band; the other saved spreads sit below the band's own lower end of 0.04%). These values feed nothing into the world except that floor.",
+  "not_used": "Coins.ph (terms unreadable on the day probed)",
+  "probe_date": "2026-10-12T19:57:22Z",
+  "probes": [
+    {
+      "ask": 18.238,
+      "bid": 18.237,
+      "book": "usdt_mxn",
+      "endpoint": "https://api.bitso.com/v3/ticker?book=usdt_mxn",
+      "file": "bitso_usdt_mxn_20261012T195722Z.json",
+      "quoted_spread_pct": 0.0055,
+      "sha256": "05cd52c551c8cbea95029995e38895253d4a9eea4eb38a0beadc66a98cf352a2",
+      "venue": "Bitso"
+    },
+    {
+      "ask": 5.0169,
+      "bid": 5.0168,
+      "book": "USDT-BRL",
+      "endpoint": "https://api.mercadobitcoin.net/api/v4/tickers?symbols=USDT-BRL,USDC-BRL",
+      "file": "mercadobitcoin_usdt_usdc_brl_20261012T195722Z.json",
+      "quoted_spread_pct": 0.002,
+      "sha256": "9bfaaf0ac921daefa98023bdc7aa6ab6cc53c097b5a2bcdfe0e2c778fd2b61f7",
+      "venue": "Mercado Bitcoin"
+    },
+    {
+      "ask": 5.0242,
+      "bid": 5.0196,
+      "book": "USDC-BRL",
+      "endpoint": "https://api.mercadobitcoin.net/api/v4/tickers?symbols=USDT-BRL,USDC-BRL",
+      "file": "mercadobitcoin_usdt_usdc_brl_20261012T195722Z.json",
+      "quoted_spread_pct": 0.0916,
+      "sha256": "9bfaaf0ac921daefa98023bdc7aa6ab6cc53c097b5a2bcdfe0e2c778fd2b61f7",
+      "venue": "Mercado Bitcoin"
+    },
+    {
+      "ask": 0.8965,
+      "bid": 0.8964,
+      "book": "USDCEUR",
+      "endpoint": "https://api.kraken.com/0/public/Ticker?pair=USDCEUR,USDTEUR",
+      "file": "kraken_usdc_usdt_eur_20261012T195722Z.json",
+      "quoted_spread_pct": 0.0112,
+      "sha256": "994c6fbb6c3c42e133cd6517248d5603fea51983a25bcb2f4653d8fa960851a9",
+      "venue": "Kraken"
+    },
+    {
+      "ask": 0.8955,
+      "bid": 0.8954,
+      "book": "USDTEUR",
+      "endpoint": "https://api.kraken.com/0/public/Ticker?pair=USDCEUR,USDTEUR",
+      "file": "kraken_usdc_usdt_eur_20261012T195722Z.json",
+      "quoted_spread_pct": 0.0112,
+      "sha256": "994c6fbb6c3c42e133cd6517248d5603fea51983a25bcb2f4653d8fa960851a9",
+      "venue": "Kraken"
+    }
+  ]
+}

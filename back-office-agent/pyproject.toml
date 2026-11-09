@@ -1,0 +1,15 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "backoffice-agent-example"
+version = "0.1.0"
+description = "An operations agent on Claude over a synthetic payments back office, audited with Prove and Trace."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = ["poisson-prove==0.2.2", "anthropic>=1.13"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/backoffice_world", "src/backoffice_agent"]

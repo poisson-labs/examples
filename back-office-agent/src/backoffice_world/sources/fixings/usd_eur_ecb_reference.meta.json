@@ -1,0 +1,11 @@
+{
+  "banking_day_rows": 70,
+  "carry_forward": "the generator carries the last fixing forward over non-banking days",
+  "cite_note": "the world tables cite the ECB page; the API URL above is the series actually read",
+  "cite_url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-usd.en.html",
+  "gaps_as_read": "no rate on Saturdays or Sundays; no TARGET closing day falls in the window",
+  "read_at": "2026-10-12T20:51Z",
+  "series": "European Central Bank, euro foreign exchange reference rate, US dollar (EXR.D.USD.EUR.SP00.A), published about 16:00 CET",
+  "unit": "USD per EUR as published; the world uses EUR per USD = 1 / rate",
+  "url": "https://data-api.ecb.europa.eu/service/data/EXR/D.USD.EUR.SP00.A?startPeriod=2026-06-29&endPeriod=2026-10-04&format=csvdata"
+}

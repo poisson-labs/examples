@@ -1,0 +1,40 @@
+{
+  "destination": "BR",
+  "non_banking_weekdays_in_window": [
+    {
+      "date": "2026-09-07",
+      "name": "Independência do Brasil"
+    }
+  ],
+  "notes": [
+    "Pix runs every day including holidays; the calendar applies to no Brazilian rail in the world. Kept because the PTAX is not published on a holiday."
+  ],
+  "read_at": "2026-10-12",
+  "sources": [
+    {
+      "quote": "No bulletin on 2026-09-07; 69 bulletins on the other 69 weekdays of the window.",
+      "read_at": "2026-10-12",
+      "title": "Banco Central do Brasil, PTAX bulletins in the window",
+      "url": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial='06-29-2026'&@dataFinalCotacao='10-04-2026'&$top=1000&$format=json"
+    },
+    {
+      "quote": "The page states the legal basis, Resolução CMN 4.880 de 23.12.2020 (sábados, domingos e feriados nacionais não são dias úteis para operações do mercado financeiro); its 2026 table loads behind a reCAPTCHA and was not read from here.",
+      "read_at": "2026-10-12",
+      "title": "FEBRABAN, Feriados Bancários",
+      "url": "https://feriadosbancarios.febraban.org.br/"
+    },
+    {
+      "quote": "Thirteen national bank holidays in 2026, Monday 7 September (Independência do Brasil) among them.",
+      "read_at": "2026-10-12",
+      "title": "InvestNews, feriados bancários 2026 (press list citing FEBRABAN)",
+      "url": "https://investnews.com.br/financas/feriados-bancarios-2026/amp/"
+    }
+  ],
+  "utc_offset_hours_in_window": -3,
+  "weekend_rule": "Saturdays and Sundays are non-banking days",
+  "window": [
+    "2026-06-29",
+    "2026-10-04"
+  ],
+  "zone": "America/Sao_Paulo"
+}
