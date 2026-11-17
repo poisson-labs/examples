@@ -1,15 +1,19 @@
 # Poisson Labs examples
 
-Worked examples on the Poisson Labs tools, each in a folder of its own. Each one is written up,
-with the output of a stored run, on [poissonlabs.ai/docs/examples](https://poissonlabs.ai/docs/examples/).
+This repository holds the code each Poisson Labs example needs, and any mock world it runs in,
+one folder per example. Examples that need only the tools (a pip install and the tools' own
+commands) keep no code here, and a research post's code stays in that study's own repository.
+Every example is written up, with the output of a stored run, on
+[poissonlabs.ai/docs/examples](https://poissonlabs.ai/docs/examples/).
 
-| Folder | What it does | Tools |
-|---|---|---|
-| [`back-office-agent`](back-office-agent/) | An operations agent on Claude over a synthetic payments back office, two ways: whether it can move to a cheaper model, and catching a planted regression and the step it broke at | Prove, Trace |
+| Folder | What it is |
+|---|---|
+| [`back-office-agent`](back-office-agent/) | An operations agent on Claude in a synthetic payments back office, with Prove and Trace: whether it can move to a cheaper model, and catching a planted regression |
 
 ## Install
 
-Python 3.11 or later. The example installs Prove from PyPI with it.
+Each folder installs on its own, with Python 3.11 or later. For the back-office agent, which
+installs Prove from PyPI with it:
 
 ```bash
 git clone https://github.com/poisson-labs/examples
