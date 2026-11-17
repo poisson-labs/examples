@@ -9,7 +9,7 @@ description = "An operations agent on Claude over a synthetic payments back offi
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.11"
-dependencies = ["poisson-prove==0.2.2", "anthropic>=1.13"]
+dependencies = ["poisson-prove>=0.2.2", "anthropic>=1.13"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/backoffice_world", "src/backoffice_agent"]

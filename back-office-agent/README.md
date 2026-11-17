@@ -25,9 +25,7 @@ and digests. It is a walkthrough, not anyone's real system.
 - An Anthropic API key in `ANTHROPIC_API_KEY`. Every model call is yours.
 - About $30 of model spend for each example; `python -m backoffice_agent plan` prints it before
   anything runs, and the agent refuses a call at `BACKOFFICE_CAP_USD` ($20 unless you set it).
-- For the Trace steps, Poisson Trace 0.1.0rc2. Trace is a pre-release and is not on PyPI yet:
-  the `poisson-trace` there today is a placeholder. Ask work@poissonlabs.ai for the wheel; once
-  Trace is public, `pip install poisson-trace` replaces it.
+- For the Trace steps, Poisson Trace from PyPI, in the same environment as the example.
 
 ## Run it
 
@@ -67,15 +65,13 @@ flagged for a large change. `--max-mde 0.729` is the smallest change Prove itsel
 accept for the paired sweep; the check stays on at that size. A planted break that stops every
 RFI is far larger; a subtle regression would not be seen at this size.
 
-Then Trace, in an environment of its own: Trace 0.1.0rc2 reads Prove through an exact pin,
-`poisson-prove==0.1.3`, and reads the store Prove 0.2.2 wrote as it is.
+Then Trace, in the same environment, on the store Prove wrote:
 
 ```bash
-python3 -m venv trace-env
-trace-env/bin/pip install ./poisson_trace-0.1.0rc2-py3-none-any.whl
-trace-env/bin/poisson-trace runs --store prove-runs
-trace-env/bin/poisson-trace where planted --store prove-runs --event no_action --by step
-trace-env/bin/poisson-trace compare before planted --store prove-runs --event no_action --by step --max-mde-hr 1.5
+pip install poisson-trace
+poisson-trace runs --store prove-runs
+poisson-trace where planted --store prove-runs --event no_action --by step
+poisson-trace compare before planted --store prove-runs --event no_action --by step --max-mde-hr 1.5
 ```
 
 Trace refuses an event a run does not carry; `runs` lists the outcomes each run holds.
