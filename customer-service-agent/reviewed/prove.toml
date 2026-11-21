@@ -1,0 +1,17 @@
+target = "prove_rollout:rollout"
+target_id = "airline-triage-agent"
+t_unit = "model turns"
+replicates = 190
+
+[axes.case]
+type = "categorical"
+values = ["seat_change", "delay_compensation", "baggage_policy", "off_topic"]
+
+[axes.scenario]
+type = "categorical"
+values = ["disrupted", "on_time"]
+
+[declare]
+outcomes = ["completed", "compensated", "guardrail_blocked", "max_turns", "error", "api_error"]
+failures = ["max_turns", "error"]
+successes = []
