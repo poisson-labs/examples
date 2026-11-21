@@ -1,0 +1,26 @@
+diff --git a/python-backend/airline/agents.py b/python-backend/airline/agents.py
+index 832a34f..a13afd7 100644
+--- a/python-backend/airline/agents.py
++++ b/python-backend/airline/agents.py
+@@ -22,7 +22,7 @@ from .tools import (
+     update_seat,
+ )
+ 
+-MODEL = "gpt-5.2"
++MODEL = "litellm/anthropic/claude-haiku-5-5"
+ 
+ 
+ def seat_services_instructions(
+diff --git a/python-backend/airline/guardrails.py b/python-backend/airline/guardrails.py
+index 1bb1691..8ad4346 100644
+--- a/python-backend/airline/guardrails.py
++++ b/python-backend/airline/guardrails.py
+@@ -11,7 +11,7 @@ from agents import (
+     input_guardrail,
+ )
+ 
+-GUARDRAIL_MODEL = "gpt-4.1-mini"
++GUARDRAIL_MODEL = "litellm/anthropic/claude-haiku-5-5"
+ 
+ 
+ class RelevanceOutput(BaseModel):

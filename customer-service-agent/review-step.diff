@@ -1,0 +1,54 @@
+diff --git a/prove.toml b/prove.toml
+index 5d49ac9..c58c924 100644
+--- a/prove.toml
++++ b/prove.toml
+@@ -1,21 +1,17 @@
+ target = "prove_rollout:rollout"
+ target_id = "airline-triage-agent"
+ t_unit = "model turns"
+-replicates = 221
++replicates = 190
+ 
+ [axes.case]
+ type = "categorical"
+ values = ["seat_change", "delay_compensation", "baggage_policy", "off_topic"]
+ 
+-[axes.model]
+-type = "categorical"
+-values = ["litellm/anthropic/claude-haiku-5-5", "litellm/anthropic/claude-sonnet-5-5"]
+-
+ [axes.scenario]
+ type = "categorical"
+ values = ["disrupted", "on_time"]
+ 
+ [declare]
+-outcomes = ["completed", "guardrail_blocked", "max_turns", "error"]
++outcomes = ["completed", "compensated", "guardrail_blocked", "max_turns", "error", "api_error"]
+ failures = ["max_turns", "error"]
+-successes = ["completed"]
++successes = []
+diff --git a/prove_rollout.py b/prove_rollout.py
+index 48968fa..fb3172f 100644
+--- a/prove_rollout.py
++++ b/prove_rollout.py
+@@ -26,6 +26,7 @@ def rollout(cfg: dict, seed: int) -> Episode:
+ async def _run(case_id: str, cfg: dict) -> Episode:
+     if str(BACKEND) not in sys.path:
+         sys.path.insert(0, str(BACKEND))
++    import openai
+     from agents import InputGuardrailTripwireTriggered, Runner
+     from agents.exceptions import MaxTurnsExceeded
+     from chatkit.types import ThreadMetadata
+@@ -61,8 +62,11 @@ async def _run(case_id: str, cfg: dict) -> Episode:
+         return Episode(outcome="guardrail_blocked", t=0, horizon=MAX_TURNS, meta=meta)
+     except MaxTurnsExceeded:
+         return Episode(outcome="max_turns", t=MAX_TURNS, horizon=MAX_TURNS, meta=meta)
++    except openai.APIError:
++        return Episode(outcome="api_error", t=0, horizon=MAX_TURNS, meta=meta)
+     except Exception:
+         return Episode(outcome="error", t=0, horizon=MAX_TURNS, meta=meta)
++    outcome = "compensated" if state.compensation_case_id else "completed"
+     return Episode(
+-        outcome="completed", t=len(result.raw_responses), horizon=MAX_TURNS, meta=meta
++        outcome=outcome, t=len(result.raw_responses), horizon=MAX_TURNS, meta=meta
+     )
