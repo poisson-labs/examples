@@ -9,7 +9,7 @@ Every example is written up, with the output of a stored run, on
 | Folder | What it is |
 |---|---|
 | [`back-office-agent`](back-office-agent/) | An operations agent on Claude in a synthetic payments back office, with Prove and Trace: whether it can move to a cheaper model, and catching a planted regression |
-| [`customer-service-agent`](customer-service-agent/) | Prove set up by a coding agent on OpenAI's public airline customer-service demo, pointed at Claude: the two files it wrote, the review, the change, and the coding agent's session |
+| [`customer-service-agent`](customer-service-agent/) | Prove set up by a coding agent on OpenAI's public airline customer-service demo, pointed at Claude: the two files it wrote, the review, the change, and the coding agent's session; then a second change, planted to pay out when it shouldn't |
 
 ## Install
 

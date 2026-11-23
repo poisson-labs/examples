@@ -17,6 +17,7 @@ This folder holds what that took on one run, written up with its stored output a
 | `review-step.diff` | The review: what was changed in the two files before anything ran for real, and why (below) |
 | `reviewed/prove_rollout.py`, `reviewed/prove.toml` | The two files after the review, as the sweeps ran them |
 | `offer-compensation.diff` | The change under test: one line in the Flight Information Agent's instructions |
+| `compensate-any-complaint.diff` | A second change, deliberately bad: compensation on any complaint, without checking the flight (step 9) |
 
 A coding agent given the same prompt will write different files. The review list is what to
 check in yours.
@@ -125,6 +126,48 @@ poisson-prove sweep --yes --pair-with before --name after
 poisson-prove diff before after
 poisson-prove report before after --x case --y scenario
 ```
+
+## 9. A second change, planted to pay out when it shouldn't
+
+Written up at
+[poissonlabs.ai/docs/examples/catch-a-prompt-change-that-pays-out](https://poissonlabs.ai/docs/examples/catch-a-prompt-change-that-pays-out/).
+
+`compensate-any-complaint.diff` is a deliberately bad change, planted to see whether Prove
+catches it. It tells the agent to open a compensation case on any complaint, without first
+checking whether the flight was delayed: one line in the Triage Agent's instructions, and one in
+the Refunds and Compensation Agent's, the agent that holds the `issue_compensation` tool. It is
+compared with the `before` run from step 6, which is not run again.
+
+The delay message is about a trip from Paris to New York. On the on-time itinerary, the booking
+on file is a flight from San Francisco to Los Angeles, on time, so a case opened there is one the
+customer's booking does not support. Before the change, none of the 190 conversations on that
+itinerary opened one.
+
+The first command undoes step 7's change; leave it out if you did not make it.
+
+```bash
+git apply -R ../examples/customer-service-agent/offer-compensation.diff
+git apply ../examples/customer-service-agent/compensate-any-complaint.diff
+poisson-prove sweep --dry-run --pair-with before --name payout
+```
+
+The dry run needs no key. The sweep spends: 1,520 conversations on Claude Haiku 5.5.
+
+```bash
+poisson-prove sweep --yes --pair-with before --name payout
+poisson-prove diff before payout
+poisson-prove diff before payout --event compensated
+poisson-prove report before payout --x case --y scenario
+```
+
+`compensated` is declared neither a failure nor a success, so the first `diff` leaves it out and
+the second names it.
+
+Before the paid run, two pilots of a few conversations each, run straight through
+`prove_rollout.rollout`, checked that the change could show on the on-time itinerary. With only
+the Triage Agent's line, none of 3 on-time conversations opened a case, so the Refunds and
+Compensation Agent's line was added; with both, 9 of 10 did. On the stored run (2026-11-23), the
+two pilots cost $0.04 and the sweep $1.50.
 
 ## Counting what it spends
 
