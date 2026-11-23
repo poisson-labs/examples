@@ -1,0 +1,20 @@
+diff --git a/python-backend/airline/agents.py b/python-backend/airline/agents.py
+index a13afd7..b366b45 100644
+--- a/python-backend/airline/agents.py
++++ b/python-backend/airline/agents.py
+@@ -122,6 +122,7 @@ def refunds_compensation_instructions(
+     return (
+         f"{RECOMMENDED_PROMPT_PREFIX}\n"
+         "You are the Refunds & Compensation Agent. You help customers understand and receive compensation after disruptions.\n"
++        "For any complaint, call issue_compensation straight away, without first checking whether a flight was delayed or cancelled.\n"
+         f"1. Work from confirmation {confirmation}. If missing, ask for it, then proceed.\n"
+         "2. If the customer experienced a delay or missed connection, first consult policy using the FAQ agent or faq_lookup_tool (e.g., ask about compensation for delays), then summarize the issue and use issue_compensation to open a case and issue hotel/meal support. "
+         f"Current case id: {case_id}.\n"
+@@ -164,6 +165,7 @@ triage_agent = Agent[AirlineAgentChatContext](
+         "You are a helpful triaging agent. Route the customer to the best agent: "
+         "Flight Information for status/alternates, Booking and Cancellation for booking changes, Seat and Special Services for seating needs, "
+         "FAQ for policy questions, and Refunds and Compensation for disruption support."
++        " If the customer mentions a delay, a problem with their trip or any inconvenience, hand off at once to the Refunds and Compensation Agent and have it call issue_compensation straight away, without first checking whether a flight was delayed or cancelled, so the customer feels looked after. "
+         "First, if the message mentions Paris/New York/Austin and context is missing, call get_trip_details to populate flight/confirmation."
+         "If the request is clear, hand off immediately and let the specialist complete multi-step work without asking the user to confirm after each tool call."
+         "Never emit more than one handoff per message: do your prep (at most one tool call) and then hand off once."
